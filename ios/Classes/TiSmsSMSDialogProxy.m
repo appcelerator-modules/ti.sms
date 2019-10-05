@@ -114,13 +114,14 @@ if (![MFMessageComposeViewController canSendText]) { \
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)composer didFinishWithResult:(MessageComposeResult)result
 {
-    [[TiApp app] hideModalController:composer animated:YES];
-    RELEASE_TO_NIL(smsDialog);
-    
+    TiThreadPerformOnMainThread(^{
+        [[TiApp app] hideModalController:composer animated:YES];
+    }, NO);
+
     if ([self _hasListeners:@"complete"]) {
         [self fireEvent:@"complete" withObject:@{
-            @"result": NUMINT(result),
-            @"success": NUMINT(YES)
+            @"result": @(result),
+            @"success": @(YES)
         }];
     }
 }
