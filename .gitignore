@@ -5,3 +5,4 @@ sms.xcscheme
 xcschememanagement.plist
 .DS_Store
 ios/sms.xcodeproj/xcuserdata/*.xcuserdatad/xcschemes/Build & Test.xcscheme
+/ios/dist
