@@ -25,11 +25,10 @@ if (![MFMessageComposeViewController canSendText]) { \
     return smsDialog;
 }
 
-- (void)dealloc
+- (void)_destroy
 {
-    [smsDialog setDelegate:nil];
-    RELEASE_TO_NIL(smsDialog);
-    [super dealloc];
+  [super _destroy];
+  smsDialog.delegate = nil;
 }
 
 #pragma mark Public API's
@@ -114,13 +113,18 @@ if (![MFMessageComposeViewController canSendText]) { \
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)composer didFinishWithResult:(MessageComposeResult)result
 {
-    [[TiApp app] hideModalController:composer animated:YES];
-    RELEASE_TO_NIL(smsDialog);
-    
+    TiThreadPerformOnMainThread(^{
+        [[TiApp app] hideModalController:composer animated:YES];
+    }, YES);
+
+    // Release SMS dialog instance
+    smsDialog.delegate = nil;
+    smsDialog = nil;
+
     if ([self _hasListeners:@"complete"]) {
         [self fireEvent:@"complete" withObject:@{
-            @"result": NUMINT(result),
-            @"success": NUMINT(YES)
+            @"result": @(result),
+            @"success": @(YES)
         }];
     }
 }
