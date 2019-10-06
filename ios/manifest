@@ -2,12 +2,12 @@
 # this is your module manifest and used by Titanium
 # during compilation, packaging, distribution, etc.
 #
-version: 2.0.0
+version: 2.0.1
 architectures: armv7 i386 x86_64 arm64
 description: Native SMS functionality in Titanium
 author: Jeff Haynie, Hans Knoechel
 license: Appcelerator Commercial License
-copyright: Copyright (c) 2010-2016 by Appcelerator, Inc.
+copyright: Copyright (c) 2010-present by Appcelerator, Inc.
 
 
 # these should not be edited
@@ -15,4 +15,4 @@ name: sms
 moduleid: ti.sms
 guid: 8b8759be-a92a-4c44-a6d2-3e08393bfc36
 platform: iphone
-minsdk: 3.4.1.GA
+minsdk: 7.5.1
